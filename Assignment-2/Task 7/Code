@@ -1,0 +1,99 @@
+#include <iostream>
+using namespace std;
+
+class OriginalHistory
+{
+    int transactions[10];
+    int count;
+
+public:
+    OriginalHistory()
+    {
+        count = 0;
+    }
+
+    void add(int value)
+    {
+        if (count < 10)
+        {
+            transactions[count] = value;
+            count++;
+        }
+        else
+        {
+            for (int i = 0; i < 9; i++)
+                transactions[i] = transactions[i + 1];
+
+            transactions[9] = value;
+        }
+    }
+
+    void display() const
+    {
+        cout << "Original History : ";
+
+        for (int i = 0; i < count; i++)
+            cout << transactions[i] << " ";
+
+        cout << '\n';
+    }
+};
+
+class CircularHistory
+{
+    int transactions[10];
+    int count;
+    int nextIndex;
+
+public:
+    CircularHistory()
+    {
+        count = 0;
+        nextIndex = 0;
+    }
+
+    void add(int value)
+    {
+        transactions[nextIndex] = value;
+
+        nextIndex = (nextIndex + 1) % 10;
+
+        if (count < 10)
+            count++;
+    }
+
+    void display() const
+    {
+        cout << "Circular History : ";
+
+        int start = (count == 10) ? nextIndex : 0;
+
+        for (int i = 0; i < count; i++)
+        {
+            int index = (start + i) % 10;
+            cout << transactions[index] << " ";
+        }
+
+        cout << '\n';
+    }
+};
+
+int main()
+{
+    OriginalHistory original;
+    CircularHistory redesigned;
+
+    for (int i = 1; i <= 15; i++)
+    {
+        original.add(i);
+        redesigned.add(i);
+    }
+
+    cout << "Transaction History (Last 10)\n";
+    cout << "------------------------------\n";
+
+    original.display();
+    redesigned.display();
+
+    return 0;
+}
