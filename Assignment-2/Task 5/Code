@@ -30,10 +30,14 @@ int main()
     Token counter[3];
     Token extra;
 
-    cout << counter[0].get() << ' '
-         << counter[2].get() << ' '
-         << extra.get() << ' '
-         << Token::issued() << '\n';
+    cout << "Token Details\n";
+    cout << "-------------\n";
+
+    cout << "First token: " << counter[0].get() << endl;
+    cout << "Third token: " << counter[2].get() << endl;
+    cout << "Extra token: " << extra.get() << endl;
+
+    cout << "Total issued: " << Token::issued() << endl;
 
     return 0;
 }
