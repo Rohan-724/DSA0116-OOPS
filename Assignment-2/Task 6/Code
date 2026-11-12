@@ -1,0 +1,54 @@
+#include <iostream>
+using namespace std;
+
+class Time
+{
+    int h, m;
+
+public:
+    Time(int hh, int mm) : h(hh), m(mm) {}
+
+    friend int minutesBetween(const Time& a, const Time& b);
+    friend bool earlier(const Time& a, const Time& b);
+};
+
+inline int minutesBetween(const Time& a, const Time& b)
+{
+    int time1 = a.h * 60 + a.m;
+    int time2 = b.h * 60 + b.m;
+
+    int difference = time1 - time2;
+
+    return (difference < 0) ? -difference : difference;
+}
+
+inline bool earlier(const Time& a, const Time& b)
+{
+    int time1 = a.h * 60 + a.m;
+    int time2 = b.h * 60 + b.m;
+
+    return time1 < time2;
+}
+
+int main()
+{
+    Time departure(9, 45);
+    Time arrival(13, 10);
+
+    cout << minutesBetween(departure, arrival) << ' '
+         << boolalpha << earlier(arrival, departure) << '\n';
+
+    Time t1(11, 30);
+    Time t2(12, 30);
+
+    cout << minutesBetween(t1, t2) << ' '
+         << earlier(t1, t2) << '\n';
+
+    Time t3(10, 15);
+    Time t4(10, 15);
+
+    cout << minutesBetween(t3, t4) << ' '
+         << earlier(t3, t4) << '\n';
+
+    return 0;
+}
